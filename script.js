@@ -14,6 +14,7 @@ const nextClueWaitTime = 1000; //how long to wait before starting playback of th
 
 function startGame() {
   //initialize game variables
+  clueHoldTime = 1000;
   checkStrikes = 0;
   progress = 0;
   gamePlaying = true;
@@ -88,7 +89,7 @@ function playClueSequence() {
   let delay = nextClueWaitTime; //set delay to initial wait time
   for (let i = 0; i <= progress; i++) {
     // for each clue that is revealed so far
-    clueHoldTime = clueHoldTime - 30;
+    clueHoldTime = clueHoldTime - 10;
     console.log("play single clue: " + pattern[i] + " in " + delay + "ms");
     setTimeout(playSingleClue, delay, pattern[i]); // set a timeout to play that clue
     delay += clueHoldTime;
@@ -119,14 +120,12 @@ function guess(btn) {
       } else {
         progress++;
         playClueSequence();
-      
       }
     } else {
       guessCounter++;
     }
   } else {
     checkStrikes++;
-    document.getElementById("output").innerHTML = checkStrikes;
     console.log("Number of Strikes: " + checkStrikes);
     playClueSequence();
     if (checkStrikes == 3) {
