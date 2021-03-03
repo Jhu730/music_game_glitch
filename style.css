@@ -2,7 +2,7 @@
 
 body {
   font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+  margin: 5em;
   background-color: slategrey;
   color: white;
 }
@@ -12,14 +12,16 @@ h1 {
 }
 
 button {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 #gameButtonArea > button {
   width: 200px;
   height: 200px;
-  margin: 2px;
+  margin: 1px;
+  border-radius:50%;
+  display: inline-block;
 }
 
 .hidden {
@@ -30,7 +32,8 @@ button {
   background: lightgreen;
 }
 
-#button1:active,  #button1.lit{
+#button1:active,
+#button1.lit {
   background: darkgreen;
 }
 
@@ -38,15 +41,17 @@ button {
   background: lightblue;
 }
 
-#button2:active,  #button2.lit {
+#button2:active,
+#button2.lit {
   background: blue;
 }
 
 #button3 {
-  background: 	darksalmon;
+  background: darksalmon;
 }
 
-#button3:active,  #button3.lit{
+#button3:active,
+#button3.lit {
   background: darkred;
 }
 
@@ -54,21 +59,24 @@ button {
   background: lightyellow;
 }
 
-#button4:active,  #button4.litb {
+#button4:active,
+#button4.lit{
   background: yellow;
 }
 
-#button5{
-   background: pink;
+#button5 {
+  background: pink;
 }
-#button5:active, #button5.litb {
+#button5:active,
+#button5.lit {
   background: hotpink;
 }
-  
-  #button6{
-   background:silver;
+
+#button6 {
+  background: silver;
 }
 
-  #button6:active,  #button6.litb {
+#button6:active,
+#button6.lit{
   background: grey;
-  }
+}

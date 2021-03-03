@@ -1,19 +1,20 @@
 //Global Variables
-var pattern = [2, 2, 4, 3, 2, 1, 2, 4];
+var pattern = [5, 6, 2, 2, 4, 3, 1, 2];
 var progress = 0;
 var gamePlaying = false;
 var tonePlaying = false;
 var volume = 0.5; //must be between 0.0 and 1.0
 var guessCounter = 0;
+var checkStrikes;
 
 // global constants
-const clueHoldTime = 1000; //how long to hold each clue's light/sound
+var clueHoldTime = 1000; //how long to hold each clue's light/sound
 const cluePauseTime = 333; //how long to pause in between clues
 const nextClueWaitTime = 1000; //how long to wait before starting playback of the clue sequence
 
 function startGame() {
   //initialize game variables
-  guessCounter = 0;
+  checkStrikes = 0;
   progress = 0;
   gamePlaying = true;
   document.getElementById("startBtn").classList.add("hidden");
@@ -22,6 +23,7 @@ function startGame() {
 }
 
 function stopGame() {
+  checkStrikes = 0;
   gamePlaying = false;
   document.getElementById("startBtn").classList.remove("hidden");
   document.getElementById("stopBtn").classList.add("hidden");
@@ -32,7 +34,9 @@ const freqMap = {
   1: 261.6,
   2: 329.6,
   3: 392,
-  4: 466.2
+  4: 466.2,
+  5: 150.1,
+  6: 569.2
 };
 function playTone(btn, len) {
   o.frequency.value = freqMap[btn];
@@ -80,9 +84,11 @@ function playSingleClue(btn) {
 }
 
 function playClueSequence() {
+  guessCounter = 0;
   let delay = nextClueWaitTime; //set delay to initial wait time
   for (let i = 0; i <= progress; i++) {
     // for each clue that is revealed so far
+    clueHoldTime = clueHoldTime - 30;
     console.log("play single clue: " + pattern[i] + " in " + delay + "ms");
     setTimeout(playSingleClue, delay, pattern[i]); // set a timeout to play that clue
     delay += clueHoldTime;
@@ -100,32 +106,31 @@ function winGame() {
   alert("Game Over. You Won!");
 }
 
-
-
-function guess(btn){
+function guess(btn) {
   console.log("user guessed: " + btn);
-
-  if(!gamePlaying){
+  if (!gamePlaying) {
     return;
   }
 
-  if(pattern[guessCounter] == btn){
-    //Correct
-    if(guessCounter == progress){
-      if(progress == pattern.length - 1){
-        //You Win!
+  if (pattern[guessCounter] == btn) {
+    if (guessCounter == progress) {
+      if (progress == pattern.length - 1) {
         winGame();
-      }else{
-        // Next Pattern
+      } else {
         progress++;
         playClueSequence();
+      
       }
-    }else{
-      //Go Again
+    } else {
       guessCounter++;
     }
-  }else{
-    //You Lose
-    loseGame();
+  } else {
+    checkStrikes++;
+    document.getElementById("output").innerHTML = checkStrikes;
+    console.log("Number of Strikes: " + checkStrikes);
+    playClueSequence();
+    if (checkStrikes == 3) {
+      loseGame();
+    }
   }
-}    
+}
